@@ -2,14 +2,14 @@ package com.example.blink
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import kotlin.contracts.contract
 
-class frAdapter : RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
+class frAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -55,7 +55,7 @@ class frAdapter : RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
 
 
     companion object {
-        class Holder : RecyclerView.ViewHolder {
+        class Holder : androidx.recyclerview.widget.RecyclerView.ViewHolder {
             var tvName: TextView
             var btnNo: Button
 

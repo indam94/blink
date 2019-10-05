@@ -3,8 +3,8 @@ package com.example.blink
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -15,7 +15,7 @@ import kotlin.concurrent.schedule
 import kotlin.system.exitProcess
 
 
-class LoginDialog : DialogFragment() {
+class LoginDialog : androidx.fragment.app.DialogFragment() {
 
     private lateinit var customView: View
 

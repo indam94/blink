@@ -3,23 +3,23 @@ package com.example.blink
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var friendRecyclerView: RecyclerView
+    lateinit var friendRecyclerView: androidx.recyclerview.widget.RecyclerView
 
 
     var friendTempList: MutableList<friend> = mutableListOf()
-    lateinit var layoutManager: RecyclerView.LayoutManager
+    lateinit var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
     var fname: Array<String> = arrayOf("Harry", "Heo", "Lee")
 
     lateinit var adapter: frAdapter
@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        friendRecyclerView = findViewById(R.id.friend_recycler_view) as RecyclerView
-        layoutManager = LinearLayoutManager(this)
+        friendRecyclerView = findViewById(R.id.friend_recycler_view) as androidx.recyclerview.widget.RecyclerView
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         friendRecyclerView.layoutManager = layoutManager
         friendRecyclerView.setHasFixedSize(true)
 
