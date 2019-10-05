@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         friend_add_button.setOnClickListener {
-            
+
         }
     }
 

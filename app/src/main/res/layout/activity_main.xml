@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -22,10 +22,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/friend_add_button" android:layout_weight="1"/>
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:src="@android:drawable/ic_dialog_map"
+            android:id="@+id/floatingActionButton"
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+    />
     <androidx.recyclerview.widget.RecyclerView
 
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/friend_recycler_view"
             android:layout_below="@id/add_friend_container"
-    />
+    >
+    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

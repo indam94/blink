@@ -12,7 +12,7 @@ class FirstActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
 
-        if(App.prefs.myUserName == "X"){
+        if(App.prefs.myUserName != "X"){
             Toast.makeText(this,"You do not register nickname.", Toast.LENGTH_LONG).show()
 
             //need status Ok button is available
