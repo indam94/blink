@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="120dp" android:layout_margin="5dp">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="horizontal"
-    >
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView android:layout_width="60dp"
-                                            android:layout_height="60dp"
-                                            app:cardCornerRadius="30dp"
-                                            android:layout_marginLeft="15dp"
-                                            android:layout_marginTop="30dp"
-                                            app:cardBackgroundColor="@android:color/transparent"
-        >
+        <androidx.cardview.widget.CardView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="30dp">
 
 
-            <Button android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+            <Button
                     android:id="@+id/btnNo"
-                    android:text="1"
-                    android:textSize="25sp"
-                    android:clickable="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="#462cea"
-            />
+                    android:clickable="false"
+                    android:text="1"
+                    android:textSize="25sp" />
 
         </androidx.cardview.widget.CardView>
 
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/tvName"
-                  android:layout_gravity="center"
-                  android:textSize="25sp"
-                  android:textStyle="bold"
-                  android:layout_marginLeft="25dp"
-        />
+        <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25dp"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
     </LinearLayout>
-    
+
 </androidx.cardview.widget.CardView>

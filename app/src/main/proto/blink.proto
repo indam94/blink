@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.blink";
+option java_outer_classname = "BlinkProto";
+
+service Blink {
+    rpc CheckNickname (Nickname) returns (NicknameResp) {}
+    rpc SubmitNickname (Nickname) returns (NicknameResp) {}
+    rpc SetReceiverStream (stream ReceiverInfo) returns (stream ReceiveRequest) {}
+    rpc GetClientsByLocation (Location) returns (stream Client) {}
+    rpc GetClientsByName (Nickname) returns (stream Client) {}
+    rpc UploadFileRequest (UploadFileRequestReq) returns (UploadFileRequestResp) {}
+    rpc UploadFile (stream FileChunk) returns (UploadFileResp) {}
+    rpc SendRequest (SendRequestReq) returns (SendRequestResp) {}
+    rpc RespondGrant (ReceiveRequest) returns (FileLink) {}
+    rpc RespondDenial (ReceiveRequest) returns (Empty) {}
+    rpc MakeSpot (MakeSpotReq) returns (MakeSpotResp) {}
+    rpc GetSpotById (GetSpotByIdReq) returns (Spot) {}
+    rpc GetSpotsByLocation (Location) returns (stream Spot) {}
+    rpc GetFileFromSpot (Spot) returns (FileLink) {}
+}
+/**
+ * General messages
+ */
+message Empty {}
+message Location {
+    float Latitude = 1;
+    float Longitude = 2;
+}
+message Client {
+    string Nickname = 1;
+    Location Location = 2;
+    float AwayDistance = 3;
+}
+message Nickname {
+    string Nickname = 1;
+}
+message Spot {
+    string Id = 1;
+    string Nickname = 2;
+    Location Location = 3;
+    string Uuid = 4;
+}
+/**
+ * CheckNickname, SubmitNickname
+ */
+message NicknameResp {
+    bool Result = 1;
+}
+/**
+ * SetReceiverStream
+ */
+message ReceiverInfo {
+    string Nickname = 1;
+    Location Location = 2;
+}
+/**
+ * UploadFileRequest, UploadFile
+ */
+message UploadFileRequestReq {
+    string Nickname = 1;
+    string Filename = 2;
+}
+message UploadFileRequestResp {
+    bool result = 1;
+    string Uuid = 2;
+}
+message FileChunk {
+    string Uuid = 1;
+    bytes Chunk = 2;
+}
+enum UploadStatusCode {
+    Unknown = 0;
+    OK = 1;
+    Failed = 2;
+}
+message UploadFileResp {
+    UploadStatusCode Code = 1;
+    string Uuid = 2;
+}
+/**
+ * SendRequest
+ */
+message SendRequestReq {
+    string Nickname = 1;
+    string ReceiverNickname = 2;
+    string Uuid = 3;
+}
+message SendRequestResp {
+    bool result = 1;
+}
+/**
+ * RespondGrant, RespondDenial
+ */
+message ReceiveRequest {
+    string Nickname = 1;
+    string ReceiverNickname = 2;
+    string Filename = 3;
+    string Uuid = 4;
+}
+message FileLink {
+    string Link = 1;
+}
+/**
+ * MakeSpot
+ */
+message MakeSpotReq {
+    string Nickname = 1;
+    Location Location = 2;
+    string Uuid = 3;
+}
+message MakeSpotResp {
+    bool Result = 1;
+}
+/**
+ * GetSpot
+ */
+message GetSpotByIdReq {
+    string Id = 1;
+}

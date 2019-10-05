@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import kotlin.contracts.contract
 
-class frAdapter : RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
+class frAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -34,6 +34,7 @@ class frAdapter : RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                @Suppress("UNCHECKED_CAST")
                 listFiltered = results!!.values as MutableList<friend>
                 notifyDataSetChanged()
             }
@@ -54,7 +55,7 @@ class frAdapter : RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
 
 
     companion object {
-        class Holder : RecyclerView.ViewHolder {
+        class Holder : androidx.recyclerview.widget.RecyclerView.ViewHolder {
             var tvName: TextView
             var btnNo: Button
 

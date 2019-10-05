@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.example.blink"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.example.blink">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -17,8 +17,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            >
+            android:theme="@style/AppTheme">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -34,14 +33,41 @@
 
         <activity
                 android:name=".SearchActivity"
-                android:label="@string/title_activity_search">
-        </activity>
+                android:label="@string/title_activity_search"></activity>
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="com.example.blink.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/fileprovider" />
+        </provider>
+
         <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+            <!-- filter for sending text; accepts SENDTO action with sms URI schemes -->
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+            </intent-filter>
+            <!-- filter for sending text or images; accepts SEND action and text or image data -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
     </application>

@@ -7,6 +7,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import kotlin.system.exitProcess
+import android.content.Intent
+import android.net.Uri
+
 
 class FirstActivity: AppCompatActivity() {
 
@@ -25,37 +28,18 @@ class FirstActivity: AppCompatActivity() {
             builder.setIcon(R.mipmap.ic_launcher)
 
             //need status Ok button is available
+            val fm = supportFragmentManager
+            val loginDialog = LoginDialog()
+            loginDialog.isCancelable = false
+            loginDialog.show(fm, "Simple Fragment")
 
-
-
-//            var v1 = layoutInflater.inflate(R.layout.dialog_login, null)
-//            builder.setView(v1)
-//
-//            var listener = object:DialogInterface.OnClickListener{
-//                override fun onClick(dialog: DialogInterface?, which: Int) {
-//
-//                    when(which){
-//                        DialogInterface.BUTTON_POSITIVE->{
-//                            //save sharedpreferences
-//
-//                        }
-//                        DialogInterface.BUTTON_NEGATIVE->{
-//                            exitProcess(-1)
-//                        }
-//                    }
-//
-//                }
-//            }
-//
-//            builder.setPositiveButton("OK", listener)
-//            builder.setNegativeButton("NO", listener)
-//
-//            builder.show()
         }
         else{
 
             Toast.makeText(this, "You already have nickname.", Toast.LENGTH_LONG).show()
         }
+
+
     }
 
 }

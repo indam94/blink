@@ -1,10 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="?dialogPreferredPadding"
->
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="?dialogPreferredPadding">
 
 
     <LinearLayout
@@ -13,11 +12,18 @@
             android:orientation="vertical">
 
         <EditText
+                android:id="@+id/user_nickname_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/user_nickname_edit_text" android:hint="Enter NickName"/>
+                android:hint="Enter NickName"
+                android:inputType="textPersonName" />
+
+        <TextView
+                android:id="@+id/login_description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="anything is not entered" />
 
     </LinearLayout>
 </RelativeLayout>
