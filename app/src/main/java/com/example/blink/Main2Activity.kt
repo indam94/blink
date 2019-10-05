@@ -17,11 +17,8 @@ class Main2Activity : AppCompatActivity() {
         initViews()
 
         setupViewPager()
-//        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
-//        viewpager_main.adapter = fragmentAdapter
-
-//        tabs_main.setupWithViewPager(viewpager_main)
     }
+
     private fun initViews() {
         tabs = findViewById(R.id.tabs)
         viewpager = findViewById(R.id.viewpager)
@@ -32,11 +29,9 @@ class Main2Activity : AppCompatActivity() {
 
         var firstFragmet: MyFragment = MyFragment.newInstance("First Fragment")
         var secondFragmet: MyFragment = MyFragment.newInstance("Second Fragment")
-        var thirdFragmet: MyFragment = MyFragment.newInstance("Third Fragment")
 
-        adapter.addFragment(firstFragmet, "ONE")
-        adapter.addFragment(secondFragmet, "TWO")
-        adapter.addFragment(thirdFragmet, "THREE")
+        adapter.addFragment(firstFragmet, "Search")
+        adapter.addFragment(secondFragmet, "List")
 
         viewpager!!.adapter = adapter
 
