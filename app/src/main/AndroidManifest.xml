@@ -11,11 +11,42 @@
             android:theme="@style/AppTheme"
             android:name=".App"
     >
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="com.example.blink.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/fileprovider" />
+        </provider>
+
         <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+
+
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity"
+
+        >
+            <!-- filter for sending text; accepts SENDTO action with sms URI schemes -->
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+            </intent-filter>
+            <!-- filter for sending text or images; accepts SEND action and text or image data -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*"/>
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
     </application>

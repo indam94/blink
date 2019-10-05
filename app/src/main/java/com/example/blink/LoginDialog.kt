@@ -1,20 +1,15 @@
 package com.example.blink
 
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.system.exitProcess
@@ -22,21 +17,7 @@ import kotlin.system.exitProcess
 
 class LoginDialog : DialogFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        //val view = activity!!.layoutInflater.inflate(R.layout.dialog_login, null)
-
-    }
-
     private lateinit var customView: View
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 

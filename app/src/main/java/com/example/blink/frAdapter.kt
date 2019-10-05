@@ -34,6 +34,7 @@ class frAdapter : RecyclerView.Adapter<frAdapter.Companion.Holder>, Filterable{
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                @Suppress("UNCHECKED_CAST")
                 listFiltered = results!!.values as MutableList<friend>
                 notifyDataSetChanged()
             }

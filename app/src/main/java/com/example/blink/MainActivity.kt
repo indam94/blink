@@ -1,5 +1,8 @@
 package com.example.blink
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -8,6 +11,7 @@ import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +24,15 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adapter: frAdapter
 
-    //lateinit var searchView: SearchView
+
+//    // The path to the root of this app's internal storage
+//    private lateinit var privateRootDir: File
+//    // The path to the "images" subdirectory
+//    private lateinit var imagesDir: File
+//    // Array of files in the images subdirectory
+//    private lateinit var imageFiles: Array<File>
+//    // Array of filenames corresponding to imageFiles
+//    private lateinit var imageFilenames: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +54,16 @@ class MainActivity : AppCompatActivity() {
         adapter = frAdapter(friendTempList, this)
         friendRecyclerView.adapter = adapter
 
+        // val data: Uri? = intent?.data
+
+        // Figure out what to do based on the intent type
+        if (intent?.type?.startsWith("image/") == true) {
+            // Handle intents with image data ...
+
+        } else if (intent?.type == "text/plain") {
+            // Handle intents with text ...
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -7,6 +7,9 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlin.system.exitProcess
+import android.content.Intent
+import android.net.Uri
+
 
 class FirstActivity: AppCompatActivity() {
 
@@ -35,6 +38,8 @@ class FirstActivity: AppCompatActivity() {
 
             Toast.makeText(this, "You already have nickname.", Toast.LENGTH_LONG).show()
         }
+
+
     }
 
 }

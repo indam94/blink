@@ -1,8 +1,11 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.protobuf'
+
+repositories {
+    mavenCentral()
+}
 
 android {
     compileSdkVersion 28
@@ -22,6 +25,24 @@ android {
     }
 }
 
+protobuf {
+    protoc { artifact = 'com.google.protobuf:protoc:3.9.0' }
+    plugins {
+        javalite { artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0' }
+        grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.24.0' }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite {}
+                grpc {
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -33,4 +54,10 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
+
+    implementation 'io.grpc:grpc-okhttp:1.24.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.24.0'
+    implementation 'io.grpc:grpc-stub:1.24.0'
+
+    implementation 'javax.annotation:javax.annotation-api:1.2'
 }
