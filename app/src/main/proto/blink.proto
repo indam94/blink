@@ -1,13 +1,11 @@
 syntax = "proto3";
-
 option java_multiple_files = true;
 option java_package = "com.example.blink";
 option java_outer_classname = "BlinkProto";
-
 service Blink {
     rpc CheckNickname (Nickname) returns (NicknameResp) {}
     rpc SubmitNickname (Nickname) returns (NicknameResp) {}
-    rpc SetReceiverStream (stream ReceiverInfo) returns (stream ReceiveRequest) {}
+    rpc SetReceiverStream (ReceiverInfo) returns (ReceiveRequest) {}
     rpc GetClientsByLocation (Location) returns (stream Client) {}
     rpc GetClientsByName (Nickname) returns (stream Client) {}
     rpc UploadFileRequest (UploadFileRequestReq) returns (UploadFileRequestResp) {}
@@ -17,13 +15,14 @@ service Blink {
     rpc RespondDenial (ReceiveRequest) returns (Empty) {}
     rpc MakeSpot (MakeSpotReq) returns (MakeSpotResp) {}
     rpc GetSpotById (GetSpotByIdReq) returns (Spot) {}
+    rpc GetSpotsByNickname (Nickname) returns (stream Spot) {}
     rpc GetSpotsByLocation (Location) returns (stream Spot) {}
     rpc GetFileFromSpot (Spot) returns (FileLink) {}
 }
 /**
  * General messages
  */
-message Empty {}
+message Empty { }
 message Location {
     float Latitude = 1;
     float Longitude = 2;
@@ -37,7 +36,7 @@ message Nickname {
     string Nickname = 1;
 }
 message Spot {
-    string Id = 1;
+    uint32 Id = 1;
     string Nickname = 2;
     Location Location = 3;
     string Uuid = 4;
@@ -111,11 +110,11 @@ message MakeSpotReq {
     string Uuid = 3;
 }
 message MakeSpotResp {
-    bool Result = 1;
+    uint32 Id = 1;
 }
 /**
  * GetSpot
  */
 message GetSpotByIdReq {
-    string Id = 1;
+    uint32 Id = 1;
 }

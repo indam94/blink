@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,20 +54,9 @@ class MainActivity : AppCompatActivity() {
 
         val data: Uri? = intent?.data
 
-        // Figure out what to do based on the intent type
-        if (intent?.type?.startsWith("image/") == true) {
-            // Handle intents with image data ...
+        val file: File = File(data?.path)
 
-        } else if (intent?.type == "text/plain") {
-            // Handle intents with text ...
 
-        } else if (intent?.type?.startsWith("video/") == true){
-
-        }
-
-        friend_add_button.setOnClickListener {
-
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -113,6 +103,17 @@ class MainActivity : AppCompatActivity() {
 
             return null
         }
+
+        override fun onProgressUpdate(vararg values: Boolean?) {
+            super.onProgressUpdate(*values)
+
+        }
     }
+
+//    inner class GetClientByLocation : AsyncTask<Float, Client, Void>(){
+//        override fun doInBackground(vararg params: Float?): Void {
+//
+//        }
+//    }
 
 }

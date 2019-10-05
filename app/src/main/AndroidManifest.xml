@@ -8,6 +8,9 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
             android:name=".App"
@@ -47,7 +50,11 @@
                     android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".FirstActivity">
+        <activity android:name=".FirstActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:screenOrientation="portrait"
+        >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
