@@ -1,31 +1,36 @@
 package com.example.blink
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.system.exitProcess
 
-import kotlinx.android.synthetic.main.dialog_login.*
+class LoginDialog : DialogFragment() {
 
-class LoginDialog : androidx.fragment.app.DialogFragment() {
-
-    //private lateinit var customView: View
+    lateinit var rootView : View
+    lateinit var loginTextView : TextView
+    var canSignUp: Boolean = false
+    var userNickName: String = ""
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_login, null)
-
+        rootView = view
         var editText: EditText = view.findViewById(R.id.user_nickname_edit_text)
         var textView: TextView = view.findViewById(R.id.login_description_text_view)
+        loginTextView = textView
         editText.addTextChangedListener(object : TextWatcher {
             var timer = Timer()
 
@@ -38,7 +43,7 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                canSignUp = false
                 timer.cancel()
                 val sleep = 3000L
                 when (s?.length) {
@@ -50,7 +55,7 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
                     else -> {
 
                         //Request
-                        login_description_text_view.text = "Requesting.."
+                        textView.text = "Requesting.."
                         textView.setTextColor(Color.GRAY)
 
                         timer = Timer()
@@ -79,6 +84,12 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
             .setView(view)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 // Register NickName(-> sharedpreference)
+                if(canSignUp){
+                    App.prefs.myUserName = userNickName
+                }
+                else{
+
+                }
 
             }
             .setNegativeButton(android.R.string.cancel) { _, _ ->
@@ -93,20 +104,19 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
         // optional
         dialog.setOnShowListener {
             // do something
+            val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            okButton.setOnClickListener {
+                // dialog won't close by default
+                dialog.dismiss()
+            }
         }
 
         return dialog
     }
 
-    inner class CheckNickNameTask : AsyncTask<String, Boolean, Void>() {
-        override fun onPreExecute() {
-            super.onPreExecute()
 
-            val view = activity!!.layoutInflater.inflate(R.layout.dialog_login, null)
-            var textView: TextView = view.findViewById(R.id.login_description_text_view)
-            Log.d("CheckNickName", "${textView.text}")
-            textView.text = "Requesting......"
-        }
+
+    inner class CheckNickNameTask : AsyncTask<String, Boolean, Void>() {
 
         override fun doInBackground(vararg params: String?): Void? {
 
@@ -114,6 +124,7 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
             var response = service.checkNickname(params[0]!!)
 
             Log.d("CheckNickName", "${response}")
+            userNickName = params[0]!!
             publishProgress(response)
 
             return null
@@ -124,17 +135,16 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
 
             Log.d("CheckNickName", "${values[0]!!}")
 
-            val view = activity!!.layoutInflater.inflate(R.layout.dialog_login, null)
-            var textView: TextView = view.findViewById(R.id.login_description_text_view)
-
             when(values[0]!!){
                 true->{
-                    textView.text = "you can use this nickname."
-                    textView.setTextColor(Color.GREEN)
+                    loginTextView.text = "you can use this nickname."
+                    loginTextView.setTextColor(Color.GREEN)
+                    canSignUp = true
                 }
                 false->{
-                    textView.text = "this nickname is already used."
-                    textView.setTextColor(Color.RED)
+                    loginTextView.text = "this nickname is already used."
+                    loginTextView.setTextColor(Color.RED)
+                    canSignUp = false
                 }
             }
         }

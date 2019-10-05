@@ -1,14 +1,8 @@
 package com.example.blink
 
-import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import kotlin.system.exitProcess
-import android.content.Intent
-import android.net.Uri
 
 
 class FirstActivity: AppCompatActivity() {
@@ -20,12 +14,6 @@ class FirstActivity: AppCompatActivity() {
 
         if(App.prefs.myUserName == "X"){
             Toast.makeText(this,"You do not register nickname.", Toast.LENGTH_LONG).show()
-
-            //Show Login Dialog
-            var builder = AlertDialog.Builder(this)
-            builder.setTitle("Sign Up NickName")
-            builder.setCancelable(false)
-            builder.setIcon(R.mipmap.ic_launcher)
 
             //need status Ok button is available
             val fm = supportFragmentManager

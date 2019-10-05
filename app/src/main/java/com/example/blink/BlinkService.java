@@ -37,4 +37,19 @@ public class BlinkService {
         }
     }
 
+    public boolean SubmitNickname(String nickname) {
+        try {
+
+            BlinkGrpc.BlinkBlockingStub stub = BlinkGrpc.newBlockingStub(this.channel);
+            Nickname request = Nickname.newBuilder().setNickname(nickname).build();
+            NicknameResp respose = stub.checkNickname(request);
+            return  respose.getResult();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            return false;
+        }
+    }
+
+
+
 }
