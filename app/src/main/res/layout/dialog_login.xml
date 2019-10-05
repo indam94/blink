@@ -18,6 +18,11 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/user_nickname_edit_text" android:hint="Enter NickName"/>
+        <TextView
+                android:text="anything is not entered"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/login_description_text_view"
+        />
 
     </LinearLayout>
 </RelativeLayout>
