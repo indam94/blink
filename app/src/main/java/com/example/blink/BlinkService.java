@@ -24,7 +24,6 @@ public class BlinkService {
 
     public boolean checkNickname(String nickname) {
         try {
-
             BlinkGrpc.BlinkBlockingStub stub = BlinkGrpc.newBlockingStub(this.channel);
             BlinkGrpc.BlinkStub asyncStub = BlinkGrpc.newStub(this.channel);
 
@@ -37,19 +36,31 @@ public class BlinkService {
         }
     }
 
-    public boolean SubmitNickname(String nickname) {
+    public boolean submitNickname(String nickname) {
         try {
-
             BlinkGrpc.BlinkBlockingStub stub = BlinkGrpc.newBlockingStub(this.channel);
+
             Nickname request = Nickname.newBuilder().setNickname(nickname).build();
-            NicknameResp respose = stub.checkNickname(request);
-            return  respose.getResult();
+            NicknameResp response = stub.submitNickname(request);
+            return  response.getResult();
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
             return false;
         }
     }
 
+    public boolean upLoadFileRequest(String nickname, String filename) {
+        try {
+            BlinkGrpc.BlinkBlockingStub stub = BlinkGrpc.newBlockingStub(this.channel);
 
+            UploadFileRequestReq request = UploadFileRequestReq.newBuilder()
+                    .setNickname(nickname).setFilename(filename).build();
+            UploadFileRequestResp response = stub.uploadFileRequest(request);
+            return  response.getResult();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            return false;
+        }
+    }
 
 }

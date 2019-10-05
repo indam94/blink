@@ -7,8 +7,25 @@
         tools:context=".MainActivity">
 
 
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/add_friend_container">
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/friend_add_edit_text" android:layout_weight="1" android:hint="add friend name"/>
+        <Button
+                android:text="ADD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/friend_add_button" android:layout_weight="1"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/friend_recycler_view"/>
+            android:layout_height="match_parent" android:id="@+id/friend_recycler_view"
+            android:layout_below="@id/add_friend_container"
+    />
 </RelativeLayout>

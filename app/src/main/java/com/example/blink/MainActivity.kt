@@ -1,20 +1,22 @@
 package com.example.blink
 
 
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var friendRecyclerView: androidx.recyclerview.widget.RecyclerView
 
-
     var friendTempList: MutableList<friend> = mutableListOf()
     lateinit var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
-    var fname: Array<String> = arrayOf("Harry", "Heo", "Lee")
+    var fname: Array<String> = emptyArray()
 
     lateinit var adapter: frAdapter
 
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         var count = 0;
 
         for (name: String in fname) {
-            var c: friend = friend(fname[count])
+            var c = friend(fname[count])
             friendTempList.add(c)
             count++
         }
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         adapter = frAdapter(friendTempList, this)
         friendRecyclerView.adapter = adapter
 
-        // val data: Uri? = intent?.data
+        val data: Uri? = intent?.data
 
         // Figure out what to do based on the intent type
         if (intent?.type?.startsWith("image/") == true) {
@@ -58,6 +60,12 @@ class MainActivity : AppCompatActivity() {
         } else if (intent?.type == "text/plain") {
             // Handle intents with text ...
 
+        } else if (intent?.type?.startsWith("video/") == true){
+
+        }
+
+        friend_add_button.setOnClickListener {
+            
         }
     }
 
@@ -95,6 +103,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    inner class UpLoadFileRequest : AsyncTask<String, Boolean, Void>(){
+
+        override fun doInBackground(vararg params: String?): Void? {
+
+
+
+            return null
+        }
     }
 
 }

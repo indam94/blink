@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import java.util.*
 import kotlin.concurrent.schedule
@@ -21,6 +22,7 @@ class LoginDialog : DialogFragment() {
 
     lateinit var rootView : View
     lateinit var loginTextView : TextView
+    lateinit var mDialog: AlertDialog
     var canSignUp: Boolean = false
     var userNickName: String = ""
 
@@ -82,36 +84,38 @@ class LoginDialog : DialogFragment() {
         val builder = AlertDialog.Builder(context!!)
             .setTitle("Custom Dialog")
             .setView(view)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                // Register NickName(-> sharedpreference)
-                if(canSignUp){
-                    App.prefs.myUserName = userNickName
-                }
-                else{
-
-                }
-
-            }
+            .setPositiveButton(android.R.string.ok,null)
             .setNegativeButton(android.R.string.cancel) { _, _ ->
                 // Finish App
                 exitProcess(-1)
             }.setCancelable(false)
 
 
-        val dialog = builder.create()
-
+        mDialog = builder.create()
 
         // optional
-        dialog.setOnShowListener {
+        mDialog.setOnShowListener {
             // do something
-            val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            val okButton = mDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             okButton.setOnClickListener {
                 // dialog won't close by default
-                dialog.dismiss()
+                //dialog.dismiss()
+
+                // Register NickName(-> sharedpreference)
+                if(canSignUp){
+
+                    //Submit
+                    var async = SubmitNickName()
+                    async.execute(userNickName)
+
+                    //dialog.dismiss()
+                }
+
+
             }
         }
 
-        return dialog
+        return mDialog
     }
 
 
@@ -136,15 +140,44 @@ class LoginDialog : DialogFragment() {
             Log.d("CheckNickName", "${values[0]!!}")
 
             when(values[0]!!){
-                true->{
+                false->{
                     loginTextView.text = "you can use this nickname."
                     loginTextView.setTextColor(Color.GREEN)
                     canSignUp = true
                 }
-                false->{
+                true->{
                     loginTextView.text = "this nickname is already used."
                     loginTextView.setTextColor(Color.RED)
                     canSignUp = false
+                }
+            }
+        }
+    }
+
+    inner class SubmitNickName: AsyncTask<String, Boolean, Void>(){
+        override fun doInBackground(vararg params: String?): Void? {
+
+            var service: BlinkService = BlinkService.getInstance()
+            var response = service.submitNickname(params[0]!!)
+
+            Log.d("SubmitNickName","${response}")
+
+            publishProgress(response)
+
+            return null
+        }
+
+        override fun onProgressUpdate(vararg values: Boolean?) {
+            super.onProgressUpdate(*values)
+
+            when(values[0]!!){
+                true->{
+                    App.prefs.myUserName = userNickName
+                    mDialog.dismiss()
+                    Toast.makeText(rootView.context, "submit success!", Toast.LENGTH_LONG).show()
+                }
+                false->{
+                    Toast.makeText(rootView.context, "fail submit, try again", Toast.LENGTH_LONG).show()
                 }
             }
         }
