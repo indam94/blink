@@ -2,22 +2,23 @@ package com.example.blink
 
 import android.app.Dialog
 import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.system.exitProcess
 
+import kotlinx.android.synthetic.main.dialog_login.*
 
 class LoginDialog : androidx.fragment.app.DialogFragment() {
 
-    private lateinit var customView: View
+    //private lateinit var customView: View
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -49,7 +50,7 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
                     else -> {
 
                         //Request
-                        textView.text = "Requesting.."
+                        login_description_text_view.text = "Requesting.."
                         textView.setTextColor(Color.GRAY)
 
                         timer = Timer()
@@ -57,8 +58,12 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
                             if (s.isNullOrEmpty()) {
                                 // do something
 
-                                textView.text = s.toString()
+                                //textView.text = s.toString()
                             }
+                            //check NickName
+                            var async = CheckNickNameTask()
+                            async.execute(s.toString())
+
 
                         }
                     }
@@ -67,7 +72,7 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
             }
         })
 
-        customView = view
+        //customView = view
 
         val builder = AlertDialog.Builder(context!!)
             .setTitle("Custom Dialog")
@@ -93,4 +98,45 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
         return dialog
     }
 
+    inner class CheckNickNameTask : AsyncTask<String, Boolean, Void>() {
+        override fun onPreExecute() {
+            super.onPreExecute()
+
+            val view = activity!!.layoutInflater.inflate(R.layout.dialog_login, null)
+            var textView: TextView = view.findViewById(R.id.login_description_text_view)
+            Log.d("CheckNickName", "${textView.text}")
+            textView.text = "Requesting......"
+        }
+
+        override fun doInBackground(vararg params: String?): Void? {
+
+            var service: BlinkService = BlinkService.getInstance()
+            var response = service.checkNickname(params[0]!!)
+
+            Log.d("CheckNickName", "${response}")
+            publishProgress(response)
+
+            return null
+        }
+
+        override fun onProgressUpdate(vararg values: Boolean?) {
+            super.onProgressUpdate(*values)
+
+            Log.d("CheckNickName", "${values[0]!!}")
+
+            val view = activity!!.layoutInflater.inflate(R.layout.dialog_login, null)
+            var textView: TextView = view.findViewById(R.id.login_description_text_view)
+
+            when(values[0]!!){
+                true->{
+                    textView.text = "you can use this nickname."
+                    textView.setTextColor(Color.GREEN)
+                }
+                false->{
+                    textView.text = "this nickname is already used."
+                    textView.setTextColor(Color.RED)
+                }
+            }
+        }
+    }
 }
