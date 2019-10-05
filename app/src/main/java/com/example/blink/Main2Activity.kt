@@ -28,7 +28,7 @@ class Main2Activity : AppCompatActivity() {
         val adapter = MyPagerAdapter(getSupportFragmentManager())
 
         var firstFragmet: MapFragment = MapFragment()
-        var secondFragmet: MyFragment = MyFragment.newInstance("Second Fragment")
+        var secondFragmet: ListFragment = ListFragment.newInstance("Second Fragment")
 
         adapter.addFragment(firstFragmet, "Search")
         adapter.addFragment(secondFragmet, "List")
