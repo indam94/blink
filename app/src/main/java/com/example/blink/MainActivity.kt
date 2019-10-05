@@ -1,17 +1,11 @@
 package com.example.blink
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import java.io.File
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,15 +32,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        friendRecyclerView = findViewById(R.id.friend_recycler_view) as androidx.recyclerview.widget.RecyclerView
+        friendRecyclerView =
+            findViewById(R.id.friend_recycler_view) as androidx.recyclerview.widget.RecyclerView
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         friendRecyclerView.layoutManager = layoutManager
         friendRecyclerView.setHasFixedSize(true)
 
         var count = 0;
 
-        for(name: String in fname){
-            var c : friend = friend(fname[count])
+        for (name: String in fname) {
+            var c: friend = friend(fname[count])
             friendTempList.add(c)
             count++
         }
@@ -68,13 +63,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        menuInflater.inflate(R.menu.menu,menu)
+        menuInflater.inflate(R.menu.menu, menu)
         var item: MenuItem? = menu?.findItem(R.id.action_search)
         var searchView = item?.actionView as SearchView
 
         searchView.queryHint = "search friend"
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(p0: String?): Boolean {
 
                 adapter.filter.filter(p0)
@@ -95,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        if(item!!.itemId == R.id.action_search){
+        if (item!!.itemId == R.id.action_search) {
             return true
         }
 
