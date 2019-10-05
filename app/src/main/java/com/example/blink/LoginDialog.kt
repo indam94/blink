@@ -82,7 +82,7 @@ class LoginDialog : DialogFragment() {
         //customView = view
 
         val builder = AlertDialog.Builder(context!!)
-            .setTitle("Custom Dialog")
+            .setTitle("Sign Up NickName")
             .setView(view)
             .setPositiveButton(android.R.string.ok,null)
             .setNegativeButton(android.R.string.cancel) { _, _ ->
@@ -125,6 +125,7 @@ class LoginDialog : DialogFragment() {
         override fun doInBackground(vararg params: String?): Void? {
 
             var service: BlinkService = BlinkService.getInstance()
+            Log.d("CheckNickName", "${service}")
             var response = service.checkNickname(params[0]!!)
 
             Log.d("CheckNickName", "${response}")
@@ -140,12 +141,12 @@ class LoginDialog : DialogFragment() {
             Log.d("CheckNickName", "${values[0]!!}")
 
             when(values[0]!!){
-                false->{
+                true->{
                     loginTextView.text = "you can use this nickname."
                     loginTextView.setTextColor(Color.GREEN)
                     canSignUp = true
                 }
-                true->{
+                false->{
                     loginTextView.text = "this nickname is already used."
                     loginTextView.setTextColor(Color.RED)
                     canSignUp = false
