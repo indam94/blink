@@ -2,6 +2,7 @@ package com.example.blink
 
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.AsyncTask
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -72,4 +73,18 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback,
             }
         }
     }
+
+    inner class GetSpotByLocation : AsyncTask<Float, Boolean ,Void>(){
+        override fun doInBackground(vararg params: Float?): Void? {
+
+            publishProgress(false)
+            return null
+        }
+
+        override fun onProgressUpdate(vararg values: Boolean?) {
+            super.onProgressUpdate(*values)
+
+        }
+    }
+
 }
