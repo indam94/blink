@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         package="com.example.blink">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,7 +17,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
+        <activity
+                android:name=".Main2Activity"
+                android:label="@string/title_activity_main2"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,7 +35,8 @@
 
         <activity
                 android:name=".SearchActivity"
-                android:label="@string/title_activity_search"></activity>
+                android:label="@string/title_activity_search" />
+
         <provider
                 android:name="androidx.core.content.FileProvider"
                 android:authorities="com.example.blink.fileprovider"
@@ -52,9 +55,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
+
             <!-- filter for sending text; accepts SENDTO action with sms URI schemes -->
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="sms" />
@@ -63,6 +68,7 @@
             <!-- filter for sending text or images; accepts SEND action and text or image data -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="image/*" />
