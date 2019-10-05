@@ -4,12 +4,12 @@ import android.app.Dialog
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.system.exitProcess
@@ -26,7 +26,7 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
 
         var editText: EditText = view.findViewById(R.id.user_nickname_edit_text)
         var textView: TextView = view.findViewById(R.id.login_description_text_view)
-        editText.addTextChangedListener(object : TextWatcher{
+        editText.addTextChangedListener(object : TextWatcher {
             var timer = Timer()
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -41,8 +41,8 @@ class LoginDialog : androidx.fragment.app.DialogFragment() {
 
                 timer.cancel()
                 val sleep = 3000L
-                when(s?.length){
-                    1,2,3,4,5 -> {
+                when (s?.length) {
+                    1, 2, 3, 4, 5 -> {
                         textView.text = "nickname needs more than 5 characters"
                         textView.setTextColor(Color.RED)
                     }
