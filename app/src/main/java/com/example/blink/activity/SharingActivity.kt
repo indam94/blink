@@ -91,10 +91,14 @@ class SharingActivity : AppCompatActivity() {
             val sendFileResult = blinkService.uploadFile(File(getUriRealPathAboveKitkat(applicationContext, uri)), response)
             val uploadResultCode = sendFileResult.code
 
-            if (uploadResultCode != UploadStatusCode.OK) {
-                return null
-            }
+            Log.d("dasdas", "${uploadResultCode}")
 
+//            if (uploadResultCode != UploadStatusCode.OK) {
+//                return null
+//            }
+
+            Log.d("dasdas", "${response}")
+            App.prefs.myUuid = response
             uploadedUuid = response
 
             return response

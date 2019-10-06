@@ -194,6 +194,7 @@ public class BlinkService {
                     }
 
                 }
+                //FileChunk chunk = FileChunk.newBuilder().setUuid(uuid).setChunk(ByteBuffer.wrap())
 
             } catch (Exception e) {
                 requestObserver.onError(e);

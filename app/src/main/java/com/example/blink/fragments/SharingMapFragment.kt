@@ -1,5 +1,8 @@
 package com.example.blink.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.AsyncTask
@@ -11,9 +14,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.blink.App
 import com.example.blink.Client
 import com.example.blink.R
 import com.example.blink.activity.SharingActivity
+import com.example.blink.activity.SpotActivity
 import com.example.blink.utils.BlinkService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -33,6 +38,10 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private lateinit var lastLocation: Location
 
     private lateinit var mHandler: Handler
+    private lateinit var mRunnable: Runnable
+
+    private var check: Boolean = false
+    private lateinit var dialog : AlertDialog
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -41,6 +50,9 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+
+
         return activity!!.layoutInflater.inflate(R.layout.fragment_map, container, false)
     }
 
@@ -51,11 +63,13 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         mapView!!.onCreate(savedInstanceState)
         mapView!!.onResume()
         mapView!!.getMapAsync(this)
+
+        mHandler = Handler()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        map.uiSettings.isZoomControlsEnabled = false
+        map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
 
         if (ActivityCompat.checkSelfPermission(
@@ -80,17 +94,16 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
-
-
-                object : Runnable{
-                    override fun run() {
-                        mHandler.postDelayed(this, 10000)
-                        //5 seconds time interval
-                        GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
-                    }
+                if(!check){
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,18f))
+                    GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
+                    check = true
                 }
+
+                Handler().postDelayed({
+                    GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
+                }, 5000)
 
 
             }
@@ -112,14 +125,28 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
                 MarkerOptions()
                     .position(LatLng(lan, lon)).title(client.nickname)
             )
+
+
         }
         synchronizeMap()
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         var activity: SharingActivity = activity as SharingActivity
-        var uuid = activity.getUploadedUuid()
+        var uuid = App.prefs.myUuid
         Log.d("gRPC", uuid)
+
+        var asyn = SendRequest()
+
+        var mBuilder = AlertDialog.Builder(activity)
+        mBuilder.setTitle("Sending Request")
+        mBuilder.setMessage("Please wait...")
+        mBuilder.setIcon(R.drawable.blink)
+        this.dialog=mBuilder.create()
+        this.dialog.show()
+
+        asyn.execute(App.prefs.myUserName, marker!!.title, uuid)
+
         return false
     }
 
@@ -135,6 +162,25 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
 
         override fun onPostExecute(result: ArrayList<Client>?) {
             addMarker(result!!)
+        }
+    }
+
+    inner class SendRequest: AsyncTask<String, String, Boolean>(){
+        override fun doInBackground(vararg params: String?): Boolean {
+            var service = BlinkService.getInstance()
+
+            var respose = service.sendRequest(params[0]!!, params[1]!!, params[2]!!)
+
+            Log.d("gRPC", "${respose}")
+
+            return respose
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            super.onPostExecute(result)
+
+            dialog.dismiss()
+
         }
     }
 }
