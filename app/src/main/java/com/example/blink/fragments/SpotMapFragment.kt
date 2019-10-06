@@ -39,7 +39,7 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        Log.d("GoogleMap","?")
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         return activity!!.layoutInflater.inflate(R.layout.fragment_map, container, false)
     }
