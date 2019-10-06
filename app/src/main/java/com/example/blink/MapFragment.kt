@@ -85,7 +85,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.isZoomControlsEnabled = false
         map.setOnMarkerClickListener(this)
 
         setUpMap()
