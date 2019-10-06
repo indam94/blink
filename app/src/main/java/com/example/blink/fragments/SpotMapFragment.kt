@@ -2,7 +2,6 @@ package com.example.blink.fragments
 
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -14,16 +13,17 @@ import androidx.fragment.app.Fragment
 import com.example.blink.Client
 import com.example.blink.R
 import com.example.blink.activity.SharingActivity
-import com.example.blink.utils.BlinkService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+
 
 class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
@@ -38,16 +38,24 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("GoogleMap","?")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        Log.d("GoogleMap", "?")
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        return activity!!.layoutInflater.inflate(R.layout.fragment_map, container, false)
+        return activity!!.layoutInflater.inflate(
+            com.example.blink.R.layout.fragment_map,
+            container,
+            false
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mapView = view.findViewById(R.id.map) as MapView
+        mapView = view.findViewById(com.example.blink.R.id.map) as MapView
         mapView!!.onCreate(savedInstanceState)
         mapView!!.onResume()
         mapView!!.getMapAsync(this)
@@ -105,7 +113,8 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(lan, lon)).title(client.nickname)
-            )
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_face_black_36dp))
+            ).showInfoWindow()
         }
     }
 
@@ -131,3 +140,4 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 //        }
 //    }
 }
+
