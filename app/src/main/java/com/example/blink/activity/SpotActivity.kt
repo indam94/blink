@@ -1,15 +1,20 @@
 package com.example.blink.activity
 
+import android.app.DownloadManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.example.blink.App
 import com.example.blink.R
@@ -107,7 +112,7 @@ class SpotActivity : AppCompatActivity() {
             var service = BlinkService.getInstance()
 
             try {
-                Thread.sleep(5000)
+                Thread.sleep(1000)
             } catch (e: Exception) {
                 e.printStackTrace()
                 throw e
@@ -137,8 +142,26 @@ class SpotActivity : AppCompatActivity() {
             val service = BlinkService.getInstance()
             val link = service.respondGrant(request.nickname, request.receiverNickname, request.filename, request.uuid)
 
-            val result = DownloadFile.downloadFromUrl(link)
-            return result
+            val splitted = link.split("?filename=")
+            val url = "http://" + App.prefs.myIp + ":3000" + splitted[0]
+            val filename = splitted[1]
+
+            try {
+                val downloadmanager = ContextCompat.getSystemService<DownloadManager>(applicationContext, DownloadManager::class.java)
+                val uri = Uri.parse(url)
+
+                val request = DownloadManager.Request(uri)
+                request.setTitle("Blink File Transfer")
+                request.setDescription("Downloading")
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                request.setVisibleInDownloadsUi(false)
+                request.setDestinationUri(Uri.parse("file://" + Environment.getExternalStorageDirectory().toString() + "/Download/" + filename))
+
+                downloadmanager!!.enqueue(request)
+            } catch (e: Exception) {
+                Log.e("Error: ", e.message)
+            }
+            return Environment.getExternalStorageDirectory().toString() + "/Download/" + filename
         }
 
         override fun onPostExecute(result: String?) {
@@ -150,6 +173,8 @@ class SpotActivity : AppCompatActivity() {
             }
 
             Toast.makeText(applicationContext, "File was successfully downloaded on:\n" + result, Toast.LENGTH_LONG).show()
+
+            SetReceiverStream().execute()
         }
     }
 
