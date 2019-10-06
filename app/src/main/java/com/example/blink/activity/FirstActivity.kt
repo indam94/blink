@@ -6,7 +6,7 @@ import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blink.App
-import com.example.blink.fragments.LoginDialog
+import com.example.blink.fragments.LoginDialogFragment
 import com.example.blink.R
 
 
@@ -24,14 +24,14 @@ class FirstActivity : AppCompatActivity() {
 
             //need status Ok button is available
             val fm = supportFragmentManager
-            val loginDialog = LoginDialog()
+            val loginDialog = LoginDialogFragment()
             loginDialog.isCancelable = false
             loginDialog.show(fm, "Simple Fragment")
 
         } else {
             Toast.makeText(this, "You already have nickname.", Toast.LENGTH_LONG).show()
             Handler().postDelayed({
-                val nextIntent = Intent(this, SharingActivity::class.java)
+                val nextIntent = Intent(this, SpotActivity::class.java)
                 startActivity(nextIntent)
 
                 finish()

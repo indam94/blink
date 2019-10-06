@@ -3,7 +3,7 @@ package com.example.blink.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-class customSharedPreferences(context: Context) {
+class CustomSharedPreference(context: Context) {
 
     private val PREF_FILENAME = "prefs"
     private val PREF_KEY_USER_NICKNAME: String = "myUserNickName"

@@ -3,19 +3,19 @@ package com.example.blink.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.example.blink.fragments.MapFragment
-import com.example.blink.fragments.MyPagerAdapter
+import com.example.blink._old.MapFragment
+import com.example.blink.fragments.ViewPagerAdapter
 import com.example.blink.R
 import com.google.android.material.tabs.TabLayout
 
-class Main2Activity : AppCompatActivity() {
+class SpotActivity : AppCompatActivity() {
 
     private lateinit var viewpager: ViewPager
     private lateinit var tabs: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+        setContentView(R.layout.activity_spot)
 
         initViews()
 
@@ -28,7 +28,7 @@ class Main2Activity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        val adapter = MyPagerAdapter(getSupportFragmentManager())
+        val adapter = ViewPagerAdapter(getSupportFragmentManager())
 
         var firstFragmet: MapFragment = MapFragment()
         //var secondFragmet: ListFragment = ListFragment.newInstance("Second Fragment")
@@ -41,6 +41,4 @@ class Main2Activity : AppCompatActivity() {
         tabs!!.setupWithViewPager(viewpager)
 
     }
-
-
 }

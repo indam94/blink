@@ -1,4 +1,4 @@
-package com.example.blink.fragments
+package com.example.blink._old
 
 import android.content.pm.PackageManager
 import android.location.Location
@@ -110,7 +110,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
-                //if SharingActivity else MainActivity
+                //if SpotActivity else MainActivity
                 //if(){}
                 var async = GetClientByLocation()
                 async.execute(location.latitude as Float, location.longitude as Float)

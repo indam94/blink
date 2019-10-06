@@ -1,4 +1,4 @@
-package com.example.blink.activity
+package com.example.blink._old
 
 
 import android.net.Uri

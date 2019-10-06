@@ -10,6 +10,7 @@ import io.grpc.stub.StreamObserver;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
@@ -170,16 +171,19 @@ public class BlinkService {
 
             try {
                 BufferedInputStream stream = new BufferedInputStream(new FileInputStream(file));
+                
                 final int chunkSize = 1024 * 1024;
                 final long chunkLength = file.length() / chunkSize;
 
-                for (int i = 0; i < chunkLength; ++i) {
-                    byte[] buf = new byte[chunkSize];
-                    if (stream.read(buf) == -1) break;
+                Log.d("UploadFile", "Chunk size: " + chunkSize);
+                Log.d("UploadFile", "Chunk length: " + chunkLength);
 
+                byte[] buf = new byte[chunkSize];
+                int count;
+                while ((count = stream.read(buf)) > 0) {
                     FileChunk chunk = FileChunk.newBuilder()
-                                .setUuid(uuid).setChunk(ByteString.copyFrom(buf))
-                                .build();
+                            .setUuid(uuid).setChunk(ByteString.copyFrom(ByteBuffer.wrap(buf), count))
+                            .build();
 
                     requestObserver.onNext(chunk);
 
@@ -188,17 +192,22 @@ public class BlinkService {
                         builder.setUuid("").setCode(UploadStatusCode.Unknown);
                         break;
                     }
+
                 }
+
             } catch (Exception e) {
                 requestObserver.onError(e);
+                e.printStackTrace();
                 throw e;
             }
 
             requestObserver.onCompleted();
+            Log.d("BlinkService", "File upload complete");
 
             UploadFileResp result = builder.build();
             return result;
         } catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }

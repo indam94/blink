@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
             android:name=".App"
@@ -19,9 +20,11 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
             android:theme="@style/AppTheme">
         <!--<activity-->
-                <!--android:name=".Main2Activity"-->
+                <!--android:name=".SharingActivity"-->
                 <!--android:label="@string/title_activity_main2"-->
                 <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
         <!--
@@ -57,8 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SharingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activity.Main2Activity">
+        <activity android:name=".activity.SpotActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SharingActivity">
             <!-- filter for sending text; accepts SENDTO action with sms URI schemes -->
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
@@ -74,9 +77,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="image/*" />
-                <data android:mimeType="video/*" />
-                <data android:mimeType="text/plain" />
+                <data android:mimeType="video/mp4" />
             </intent-filter>
         </activity>
     </application>

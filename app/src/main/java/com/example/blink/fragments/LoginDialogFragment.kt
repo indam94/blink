@@ -16,13 +16,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.blink.App
 import com.example.blink.R
-import com.example.blink.activity.Main2Activity
+import com.example.blink.activity.SpotActivity
 import com.example.blink.utils.BlinkService
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.system.exitProcess
 
-class LoginDialog : DialogFragment() {
+class LoginDialogFragment : DialogFragment() {
 
     lateinit var rootView : View
     lateinit var loginTextView : TextView
@@ -180,7 +180,7 @@ class LoginDialog : DialogFragment() {
                     App.prefs.myUserName = userNickName
                     mDialog.dismiss()
                     Toast.makeText(rootView.context, "submit success!", Toast.LENGTH_LONG).show()
-                    val nextIntent = Intent(rootView.context, Main2Activity::class.java)
+                    val nextIntent = Intent(rootView.context, SpotActivity::class.java)
                     startActivity(nextIntent)
                 }
                 false->{
