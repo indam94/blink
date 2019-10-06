@@ -54,7 +54,7 @@ class LoginDialogFragment : DialogFragment() {
                 val sleep = 500L
                 when (s?.length) {
                     1, 2, 3, 4, 5 -> {
-                        textView.text = "nickname needs more than 5 characters"
+                        textView.text = "please enter at least 5 characters"
                         textView.setTextColor(Color.RED)
                     }
 
@@ -86,7 +86,7 @@ class LoginDialogFragment : DialogFragment() {
         //customView = view
 
         val builder = AlertDialog.Builder(context!!)
-            .setTitle("Sign Up NickName")
+            .setTitle("Enter nickname for sign up")
             .setView(view)
             .setPositiveButton(android.R.string.ok,null)
             .setNegativeButton(android.R.string.cancel) { _, _ ->
@@ -146,7 +146,7 @@ class LoginDialogFragment : DialogFragment() {
 
             when(values[0]!!){
                 true->{
-                    loginTextView.text = "you can use this nickname."
+                    loginTextView.text = "Looks good"
                     loginTextView.setTextColor(Color.GREEN)
                     canSignUp = true
                 }
