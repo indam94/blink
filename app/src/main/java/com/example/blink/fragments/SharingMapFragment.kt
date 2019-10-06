@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,8 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     private lateinit var mapView: MapView
 
     private lateinit var lastLocation: Location
+
+    private lateinit var mHandler: Handler
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -76,7 +79,15 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
-                GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
+                object : Runnable{
+                    override fun run() {
+                        mHandler.postDelayed(this, 5000)
+                        //5 seconds time interval
+                        GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
+                    }
+                }
+
+
             }
         }
     }
@@ -111,7 +122,7 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             var response = service.getClientsByLocation(params[0]!!, params[1]!!)
 
             Log.d("gRPC", "${response}")
-
+            addMarker(response)
             return null
         }
 

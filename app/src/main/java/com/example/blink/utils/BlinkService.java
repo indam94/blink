@@ -171,7 +171,7 @@ public class BlinkService {
 
             try {
                 BufferedInputStream stream = new BufferedInputStream(new FileInputStream(file));
-                
+
                 final int chunkSize = 1024 * 1024;
                 final long chunkLength = file.length() / chunkSize;
 

@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.blink._old.MapFragment
 import com.example.blink.fragments.ViewPagerAdapter
 import com.example.blink.R
+import com.example.blink.fragments.SpotMapFragment
 import com.google.android.material.tabs.TabLayout
 
 class SpotActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class SpotActivity : AppCompatActivity() {
     private fun setupViewPager() {
         val adapter = ViewPagerAdapter(getSupportFragmentManager())
 
-        var firstFragmet: MapFragment = MapFragment()
+        var firstFragmet = SpotMapFragment()
         //var secondFragmet: ListFragment = ListFragment.newInstance("Second Fragment")
 
         adapter.addFragment(firstFragmet, "Search")
