@@ -1,8 +1,6 @@
 package com.example.blink.fragments
 
 import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.AsyncTask
@@ -18,7 +16,6 @@ import com.example.blink.App
 import com.example.blink.Client
 import com.example.blink.R
 import com.example.blink.activity.SharingActivity
-import com.example.blink.activity.SpotActivity
 import com.example.blink.utils.BlinkService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -124,7 +122,8 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(lan, lon)).title(client.nickname)
-            )
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_face_black_36dp))
+            ).showInfoWindow()
 
 
         }

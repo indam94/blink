@@ -113,7 +113,7 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(lan, lon)).title(client.nickname)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_face_black_36dp))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_settings_input_antenna_black_36dp))
             ).showInfoWindow()
         }
     }
