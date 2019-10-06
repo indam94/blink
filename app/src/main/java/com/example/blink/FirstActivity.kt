@@ -2,6 +2,7 @@ package com.example.blink
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class FirstActivity: AppCompatActivity() {
+
+    private val SPLASH_TIME_OUT:Long=3000 // 3 sec
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -26,11 +29,17 @@ class FirstActivity: AppCompatActivity() {
 
         } else {
             Toast.makeText(this, "You already have nickname.", Toast.LENGTH_LONG).show()
-            val nextIntent = Intent(this, Main2Activity::class.java)
-            startActivity(nextIntent)
+            Handler().postDelayed({
+                val nextIntent = Intent(this, Main2Activity::class.java)
+                startActivity(nextIntent)
+
+                finish()
+            }, SPLASH_TIME_OUT)
         }
 
 
     }
+
+
 
 }

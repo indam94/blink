@@ -95,25 +95,5 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    inner class UpLoadFileRequest : AsyncTask<String, Boolean, Void>(){
-
-        override fun doInBackground(vararg params: String?): Void? {
-
-
-
-            return null
-        }
-
-        override fun onProgressUpdate(vararg values: Boolean?) {
-            super.onProgressUpdate(*values)
-
-        }
-    }
-
-//    inner class GetClientByLocation : AsyncTask<Float, Client, Void>(){
-//        override fun doInBackground(vararg params: Float?): Void {
-//
-//        }
-//    }
 
 }

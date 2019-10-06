@@ -1,9 +1,13 @@
 package com.example.blink
 
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import java.io.File
 
 class Main2Activity : AppCompatActivity() {
 
@@ -28,14 +32,16 @@ class Main2Activity : AppCompatActivity() {
         val adapter = MyPagerAdapter(getSupportFragmentManager())
 
         var firstFragmet: MapFragment = MapFragment()
-        var secondFragmet: ListFragment = ListFragment.newInstance("Second Fragment")
+        //var secondFragmet: ListFragment = ListFragment.newInstance("Second Fragment")
 
         adapter.addFragment(firstFragmet, "Search")
-        adapter.addFragment(secondFragmet, "List")
+        //adapter.addFragment(secondFragmet, "List")
 
         viewpager!!.adapter = adapter
 
         tabs!!.setupWithViewPager(viewpager)
 
     }
+
+
 }

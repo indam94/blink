@@ -3,6 +3,7 @@ package com.example.blink
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
@@ -47,7 +48,7 @@ class LoginDialog : DialogFragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 canSignUp = false
                 timer.cancel()
-                val sleep = 3000L
+                val sleep = 500L
                 when (s?.length) {
                     1, 2, 3, 4, 5 -> {
                         textView.text = "nickname needs more than 5 characters"
@@ -176,6 +177,8 @@ class LoginDialog : DialogFragment() {
                     App.prefs.myUserName = userNickName
                     mDialog.dismiss()
                     Toast.makeText(rootView.context, "submit success!", Toast.LENGTH_LONG).show()
+                    val nextIntent = Intent(rootView.context, Main2Activity::class.java)
+                    startActivity(nextIntent)
                 }
                 false->{
                     Toast.makeText(rootView.context, "fail submit, try again", Toast.LENGTH_LONG).show()

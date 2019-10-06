@@ -39,6 +39,11 @@
                 android:layout_marginLeft="25dp"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+        <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/download_progressbar" android:layout_weight="1"/>
 
     </LinearLayout>
 
