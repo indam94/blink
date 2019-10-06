@@ -74,14 +74,19 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         map.isMyLocationEnabled = true
 
         fusedLocationClient.lastLocation.addOnSuccessListener(requireActivity()) { location ->
+
+            Log.d("gRPC", "location")
+
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
+
+
                 object : Runnable{
                     override fun run() {
-                        mHandler.postDelayed(this, 5000)
+                        mHandler.postDelayed(this, 10000)
                         //5 seconds time interval
                         GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
                     }
@@ -97,16 +102,18 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
     }
 
     fun addMarker(clients: ArrayList<Client>) {
+        Log.d("gRPC","${clients.size}")
         for (client in clients) {
             var location = client.location
-            var lan = location.latitude as Double
-            var lon = location.longitude as Double
+            var lan = location.latitude.toDouble()
+            var lon = location.longitude.toDouble()
 
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(lan, lon)).title(client.nickname)
             )
         }
+        synchronizeMap()
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
@@ -116,18 +123,18 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         return false
     }
 
-    inner class GetClientByLocation : AsyncTask<Float, Client, Void?>() {
-        override fun doInBackground(vararg params: Float?): Void? {
+    inner class GetClientByLocation : AsyncTask<Float, Void, ArrayList <Client>>() {
+        override fun doInBackground(vararg params: Float?): ArrayList<Client>? {
             var service: BlinkService = BlinkService.getInstance()
             var response = service.getClientsByLocation(params[0]!!, params[1]!!)
 
             Log.d("gRPC", "${response}")
-            addMarker(response)
-            return null
+
+            return response
         }
 
-        override fun onPostExecute(result: Void?) {
-            synchronizeMap()
+        override fun onPostExecute(result: ArrayList<Client>?) {
+            addMarker(result!!)
         }
     }
 }
