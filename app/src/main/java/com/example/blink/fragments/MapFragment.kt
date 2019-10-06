@@ -1,8 +1,7 @@
-package com.example.blink
+package com.example.blink.fragments
 
 import android.content.pm.PackageManager
 import android.location.Location
-import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.blink.*
+import com.example.blink.utils.BlinkService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,7 +21,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.io.File
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -51,9 +51,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             //println("dir: $directory | fileName: $fileName | extension: $extension")
 
             var async = UploadFileRequest()
-            async.execute(App.prefs.myUserName, fileName+'.'+extension)
+            async.execute(App.prefs.myUserName, fileName + '.' + extension)
         }
-
 
 
     }
@@ -100,7 +99,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                MapFragment.LOCATION_PERMISSION_REQUEST_CODE
+                LOCATION_PERMISSION_REQUEST_CODE
             )
             return
         }
@@ -119,19 +118,21 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
     }
 
-    public fun addMarker(clients: ArrayList<Client>){
-        for(client in clients){
+    public fun addMarker(clients: ArrayList<Client>) {
+        for (client in clients) {
             var location = client.location
             var lan = location.latitude as Double
             var lon = location.longitude as Double
 
-            map.addMarker(MarkerOptions()
-                .position(LatLng(lan, lon)).title(client.nickname))
+            map.addMarker(
+                MarkerOptions()
+                    .position(LatLng(lan, lon)).title(client.nickname)
+            )
         }
         mapView!!.getMapAsync(this)
     }
 
-    inner class UploadFileRequest: AsyncTask<String, String, Void>(){
+    inner class UploadFileRequest : AsyncTask<String, String, Void>() {
         override fun doInBackground(vararg params: String?): Void? {
 
             var service: BlinkService = BlinkService.getInstance()
@@ -140,7 +141,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             Log.d("gRPC", "${response}")
 
             //File => uuid => uploadFile
-            if(response != ""){
+            if (response != "") {
                 var async = UploadFile()
                 async.execute()
             }
@@ -154,7 +155,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
     }
 
-    inner class GetClientByLocation: AsyncTask<Float, Client, Void?>(){
+    inner class GetClientByLocation : AsyncTask<Float, Client, Void?>() {
         override fun doInBackground(vararg params: Float?): Void? {
 
             var service: BlinkService = BlinkService.getInstance()
@@ -172,9 +173,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
     }
 
-    inner class UploadFile: AsyncTask<String, UploadFileResp, Void?>(){
+    inner class UploadFile : AsyncTask<String, UploadFileResp, Void?>() {
         override fun doInBackground(vararg params: String?): Void? {
-
 
 
             return null

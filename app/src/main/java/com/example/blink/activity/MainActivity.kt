@@ -1,14 +1,15 @@
-package com.example.blink
+package com.example.blink.activity
 
 
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.blink.R
+import com.example.blink._old.frAdapter
+import com.example.blink._old.friend
 import java.io.File
 
 class MainActivity : AppCompatActivity() {

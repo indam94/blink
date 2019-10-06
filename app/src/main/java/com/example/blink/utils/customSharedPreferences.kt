@@ -1,4 +1,4 @@
-package com.example.blink
+package com.example.blink.utils
 
 import android.content.Context
 import android.content.SharedPreferences

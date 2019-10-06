@@ -1,18 +1,21 @@
-package com.example.blink
+package com.example.blink.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.example.blink.fragments.MapFragment
+import com.example.blink.fragments.MyPagerAdapter
+import com.example.blink.R
 import com.google.android.material.tabs.TabLayout
 
-class SharingActivity : AppCompatActivity() {
+class Main2Activity : AppCompatActivity() {
 
     private lateinit var viewpager: ViewPager
     private lateinit var tabs: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sharing)
+        setContentView(R.layout.activity_main2)
 
         initViews()
 
@@ -38,4 +41,6 @@ class SharingActivity : AppCompatActivity() {
         tabs!!.setupWithViewPager(viewpager)
 
     }
+
+
 }

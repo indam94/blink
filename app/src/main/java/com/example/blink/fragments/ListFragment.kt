@@ -1,4 +1,4 @@
-package com.example.blink
+package com.example.blink.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.blink.R
 
 class ListFragment : Fragment(){
 

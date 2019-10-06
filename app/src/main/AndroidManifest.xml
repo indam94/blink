@@ -46,7 +46,7 @@
                     android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".FirstActivity"
+        <activity android:name=".activity.FirstActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait"
         >
@@ -57,28 +57,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main2Activity" android:screenOrientation="portrait" />
-        <!--<activity android:name=".SharingActivity">-->
-            <!--&lt;!&ndash; filter for sending text; accepts SENDTO action with sms URI schemes &ndash;&gt;-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SENDTO" />-->
+        <activity android:name=".activity.SharingActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Main2Activity">
+            <!-- filter for sending text; accepts SENDTO action with sms URI schemes -->
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <category android:name="android.intent.category.DEFAULT" />
 
-                <!--<data android:scheme="sms" />-->
-                <!--<data android:scheme="smsto" />-->
-            <!--</intent-filter>-->
-            <!--&lt;!&ndash; filter for sending text or images; accepts SEND action and text or image data &ndash;&gt;-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.SEND" />-->
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+            </intent-filter>
+            <!-- filter for sending text or images; accepts SEND action and text or image data -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <category android:name="android.intent.category.DEFAULT" />
 
-                <!--<data android:mimeType="image/*" />-->
-                <!--<data android:mimeType="video/*" />-->
-                <!--<data android:mimeType="text/plain" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

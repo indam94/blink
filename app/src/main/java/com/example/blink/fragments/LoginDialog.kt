@@ -1,8 +1,7 @@
-package com.example.blink
+package com.example.blink.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.AsyncTask
@@ -15,6 +14,10 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.blink.App
+import com.example.blink.R
+import com.example.blink.activity.Main2Activity
+import com.example.blink.utils.BlinkService
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.system.exitProcess

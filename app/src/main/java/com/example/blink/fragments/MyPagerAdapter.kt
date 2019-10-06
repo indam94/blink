@@ -1,4 +1,4 @@
-package com.example.blink
+package com.example.blink.fragments
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

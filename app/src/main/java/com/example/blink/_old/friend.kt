@@ -1,4 +1,4 @@
-package com.example.blink
+package com.example.blink._old
 
 class friend {
 

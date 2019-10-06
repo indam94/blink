@@ -1,6 +1,7 @@
-package com.example.blink;
+package com.example.blink.utils;
 
 import android.util.Log;
+import com.example.blink.*;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
