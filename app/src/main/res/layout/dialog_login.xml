@@ -14,14 +14,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Enter NickName"
+                android:hint="Enter Nickname"
                 android:inputType="textPersonName" />
 
         <TextView
                 android:id="@+id/login_description_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="anything is not entered" />
+                android:text="nothing entered" />
 
     </LinearLayout>
 </RelativeLayout>
