@@ -2,6 +2,7 @@ package com.example.blink.fragments
 
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -12,7 +13,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.blink.Client
 import com.example.blink.R
+import com.example.blink.Spot
 import com.example.blink.activity.SharingActivity
+import com.example.blink.activity.SpotActivity
+import com.example.blink.utils.BlinkService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -33,6 +37,8 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private lateinit var lastLocation: Location
 
     private lateinit var mHandler: Handler
+
+    private var check: Boolean = false
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -85,15 +91,18 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
+                //map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
-//                object : Runnable{
-//                    override fun run() {
-//                        mHandler.postDelayed(this, 5000)
-//                        //5 seconds time interval
-//                        GetClientByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
-//                    }
-//                }
+                if(!check){
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,18f))
+                    GetSpotByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
+                    check = true
+                }
+
+                Handler().postDelayed({
+                    GetSpotByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
+                }, 5000)
+
 
 
             }
@@ -104,11 +113,12 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         mapView!!.getMapAsync(this);
     }
 
-    fun addMarker(clients: ArrayList<Client>) {
+    fun addMarker(clients: ArrayList<Spot>) {
+        Log.d("gRPC","${clients.size}")
         for (client in clients) {
             var location = client.location
-            var lan = location.latitude as Double
-            var lon = location.longitude as Double
+            var lan = location.latitude.toDouble()
+            var lon = location.longitude.toDouble()
 
             map.addMarker(
                 MarkerOptions()
@@ -116,28 +126,38 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.baseline_settings_input_antenna_black_36dp))
             ).showInfoWindow()
         }
+
+        synchronizeMap()
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
-        var activity: SharingActivity = activity as SharingActivity
-        var uuid = activity.getUploadedUuid()
-        Log.d("gRPC", uuid)
+//        var activity: SpotActivity = activity as Ac
+//        var uuid = activity.getUploadedUuid()
+//        Log.d("gRPC", uuid)
         return false
     }
 
-//    inner class GetClientByLocation : AsyncTask<Float, Client, Void?>() {
-//        override fun doInBackground(vararg params: Float?): Void? {
-//            var service: BlinkService = BlinkService.getInstance()
-//            var response = service.getClientsByLocation(params[0]!!, params[1]!!)
-//
-//            Log.d("gRPC", "${response}")
-//
-//            return null
-//        }
-//
-//        override fun onPostExecute(result: Void?) {
-//            synchronizeMap()
+
+
+    inner class GetSpotByLocation: AsyncTask<Float, Spot, ArrayList<Spot>>(){
+        override fun doInBackground(vararg params: Float?): ArrayList<Spot> {
+            var service = BlinkService.getInstance()
+            var response = service.getSpotsByLocation(params[0]!!, params[1]!!)
+
+            return response
+        }
+
+        override fun onPostExecute(result: ArrayList<Spot>?) {
+            addMarker(result!!)
+        }
+    }
+
+//    inner class GetFileFromStop: AsyncTask<Spot, String, Boolean>(){
+//        override fun doInBackground(vararg params: Spot?): Boolean {
+//            var service = BlinkService.getInstance()
+//            var response = service.getFileFromSpot(params[0]!!)
 //        }
 //    }
+
 }
 

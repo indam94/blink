@@ -1,11 +1,14 @@
 package com.example.blink.activity
 
+import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.example.blink._old.MapFragment
 import com.example.blink.fragments.ViewPagerAdapter
 import com.example.blink.R
+import com.example.blink.ReceiveRequest
 import com.example.blink.fragments.SpotMapFragment
 import com.google.android.material.tabs.TabLayout
 
@@ -42,4 +45,27 @@ class SpotActivity : AppCompatActivity() {
         tabs!!.setupWithViewPager(viewpager)
 
     }
+
+    private fun ReceiverMode(){
+        while (true){
+            Handler().postDelayed({
+
+            }, 5000)
+        }
+    }
+//
+//    inner class ReceiverMode: Runnable{
+//
+//        var handler = Handler();
+//
+//        val r : Runnable = Runnable {
+//
+//        }
+//
+//        override fun run() {
+//
+//        }
+//
+//    }
+
 }
