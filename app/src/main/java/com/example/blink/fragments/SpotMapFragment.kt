@@ -94,23 +94,20 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 //map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14.0f))
 
                 if(!check){
+                    check = true
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,18f))
                     GetSpotByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
-                    check = true
                 }
 
                 Handler().postDelayed({
                     GetSpotByLocation().execute(location.latitude.toFloat(), location.longitude.toFloat())
-                }, 5000)
-
-
-
+                }, 1000)
             }
         }
     }
 
     fun synchronizeMap() {
-        mapView!!.getMapAsync(this);
+        mapView!!.getMapAsync(this)
     }
 
     fun addMarker(clients: ArrayList<Spot>) {
@@ -136,8 +133,6 @@ class SpotMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 //        Log.d("gRPC", uuid)
         return false
     }
-
-
 
     inner class GetSpotByLocation: AsyncTask<Float, Spot, ArrayList<Spot>>(){
         override fun doInBackground(vararg params: Float?): ArrayList<Spot> {

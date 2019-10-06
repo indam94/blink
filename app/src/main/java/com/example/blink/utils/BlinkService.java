@@ -17,7 +17,6 @@ import java.util.concurrent.CountDownLatch;
 
 public class BlinkService {
     private static final String TAG = "BlinkService";
-    private static final String HOST = "10.64.6.2";
     private static final int PORT = 8080;
 
     private static BlinkService instance;
@@ -25,7 +24,7 @@ public class BlinkService {
     private ManagedChannel channel;
 
     public static BlinkService getInstance() {
-        if (instance == null) instance = new BlinkService(HOST, PORT);
+        if (instance == null) instance = new BlinkService(App.prefs.getMyIp(), PORT);
         return instance;
     }
 
@@ -249,17 +248,17 @@ public class BlinkService {
         }
     }
 
-    public Empty respondDenial (String nickname, String receiverNickname, String filename, String uuid) {
+    public boolean respondDenial (String nickname, String receiverNickname, String filename, String uuid) {
         try{
             BlinkGrpc.BlinkBlockingStub stub = BlinkGrpc.newBlockingStub(this.channel);
             ReceiveRequest request = ReceiveRequest.newBuilder().setNickname(nickname).setReceiverNickname(receiverNickname)
                     .setFilename(filename).setUuid(uuid).build();
-            Empty response = stub.respondDenial(request);
+            stub.respondDenial(request);
 
-            return response;
+            return true;
         } catch (Exception e){
 
-            return null;
+            return false;
         }
     }
 

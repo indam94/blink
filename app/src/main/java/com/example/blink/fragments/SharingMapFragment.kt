@@ -144,6 +144,8 @@ class SharingMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCli
         this.dialog=mBuilder.create()
         this.dialog.show()
 
+        Log.d("gRPC", "marker name is ${marker!!.title}")
+
         asyn.execute(App.prefs.myUserName, marker!!.title, uuid)
 
         return false

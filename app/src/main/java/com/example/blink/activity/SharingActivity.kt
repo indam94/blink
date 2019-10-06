@@ -1,22 +1,20 @@
 package com.example.blink.activity
 
 import android.Manifest
-import android.content.ContentResolver
-import android.content.ContentUris
-import android.content.Context
-import android.content.Intent
+import android.app.AlertDialog
+import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.viewpager.widget.ViewPager
 import com.example.blink.App
 import com.example.blink.R
-import com.example.blink.UploadStatusCode
 import com.example.blink.fragments.SharingMapFragment
 import com.example.blink.fragments.ViewPagerAdapter
 import com.example.blink.utils.BlinkService
@@ -41,9 +39,21 @@ class SharingActivity : AppCompatActivity() {
         tabs = findViewById(R.id.tabs)
         viewpager = findViewById(R.id.viewpager)
 
-        setupViewPager()
-
-        this.sendFileToServer(intent)
+        var dialog = AlertDialog.Builder(this)
+        dialog.setTitle("IP ADDRESS")
+        dialog.setMessage("Enter server IP address")
+        dialog.setCancelable(false)
+        var v1 = layoutInflater.inflate(R.layout.ip_dialog, null)
+        dialog.setView(v1)
+        dialog.setPositiveButton("OK") { dialog: DialogInterface, which: Int ->
+            var d = dialog as AlertDialog;
+            var editText = d.findViewById<EditText>(R.id.ip_address_edittext)
+            App.prefs.myIp = editText.text.toString()
+            BlinkService.getInstance()
+            setupViewPager()
+            this.sendFile(intent)
+        };
+        dialog.show()
     }
 
     private fun setupViewPager() {
@@ -60,8 +70,9 @@ class SharingActivity : AppCompatActivity() {
         tabs!!.setupWithViewPager(viewpager)
     }
 
-    private fun sendFileToServer(intent: Intent) {
-        val permission = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+    private fun sendFile(intent: Intent) {
+        val permission =
+            ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE)
         if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 this,
@@ -76,7 +87,7 @@ class SharingActivity : AppCompatActivity() {
         }
     }
 
-    inner class SendFileToServer : AsyncTask<Uri, Void, String>() {
+    private inner class SendFileToServer : AsyncTask<Uri, Void, String>() {
         override fun doInBackground(vararg params: Uri?): String? {
             val uri = params[0]!!
             val blinkService: BlinkService = BlinkService.getInstance()
@@ -88,8 +99,21 @@ class SharingActivity : AppCompatActivity() {
                 return null
             }
 
-            val sendFileResult = blinkService.uploadFile(File(getUriRealPathAboveKitkat(applicationContext, uri)), response)
+            val sendFileResult =
+                blinkService.uploadFile(File(getUriRealPathAboveKitkat(applicationContext, uri)), response)
             val uploadResultCode = sendFileResult.code
+
+            Log.d("dasdas", "${uploadResultCode}")
+
+//            if (uploadResultCode != UploadStatusCode.OK) {
+//                return null
+//            }
+
+            Log.d("dasdas", "${response}")
+            App.prefs.myUuid = response
+            uploadedUuid = response
+
+            return response
 
             Log.d("dasdas", "${uploadResultCode}")
 
