@@ -1,4 +1,5 @@
 # Blink - Hyper-Fast File Sharing
+![blink](https://user-images.githubusercontent.com/40487883/66357241-02b42b80-e923-11e9-9829-61e258f2f18a.png)
 This product is built at [AT&T 5G Hackathon](https://devpost.com/software/blink-hyperfast-file-sharing-qudz4c) 
 
 
